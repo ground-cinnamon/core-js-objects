@@ -396,7 +396,7 @@ const cssSelectorBuilder = {
     return this;
   },
 
-  combine(selector1, combinator, selector2) {
+  combine(/*selector1, combinator, selector2*/) {
     throw new Error('Not implemented');
   },
 };
