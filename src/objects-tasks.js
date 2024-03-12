@@ -220,8 +220,9 @@ function getJSON(obj) {
  *    const r = fromJSON(Circle.prototype, '{"radius":10}');
  *
  */
-function fromJSON(/* proto, json */) {
-  throw new Error('Not implemented');
+function fromJSON(proto, json) {
+  const obj = JSON.parse(json);
+  return Object.setPrototypeOf(obj, proto);
 }
 
 /**
@@ -250,8 +251,13 @@ function fromJSON(/* proto, json */) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  return arr.sort((a, b) => {
+    if (a.country === b.country) {
+      return a.city.localeCompare(b.city);
+    }
+    return a.country.localeCompare(b.country);
+  });
 }
 
 /**
@@ -284,8 +290,19 @@ function sortCitiesArray(/* arr */) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  const resultMap = new Map();
+  array.forEach((item) => {
+    const key = keySelector(item);
+    const value = valueSelector(item);
+
+    if (resultMap.has(key)) {
+      return resultMap.get(key).push(value);
+    }
+    resultMap.set(key, [value]);
+  });
+
+  return resultMap;
 }
 
 /**
@@ -343,34 +360,50 @@ function group(/* array, keySelector, valueSelector */) {
  */
 
 const cssSelectorBuilder = {
-  element(/* value */) {
-    throw new Error('Not implemented');
+  element(value) {
+    return {
+      elementType: value,
+      id: null,
+      classes: [],
+      attrs: [],
+      pseudoClasses: [],
+      pseudoElement: null,
+      stringify() {
+
+      }
+    };
+  },
   },
 
-  id(/* value */) {
-    throw new Error('Not implemented');
+  id(value) {
+    this.id = value;
+    return this;
   },
 
-  class(/* value */) {
-    throw new Error('Not implemented');
+  class(value) {
+    this.classes.push(value);
+    return this;
   },
 
-  attr(/* value */) {
-    throw new Error('Not implemented');
+  attr(value) {
+    this.attrs.push(value);
+    return this;
   },
 
-  pseudoClass(/* value */) {
-    throw new Error('Not implemented');
+  pseudoClass(value) {
+    this.pseudoClasses.push(value);
+    return this;
   },
 
-  pseudoElement(/* value */) {
-    throw new Error('Not implemented');
+  pseudoElement(value ) {
+    this.pseudoElement = value;
+    return this;;
   },
 
-  combine(/* selector1, combinator, selector2 */) {
+  combine(selector1, combinator, selector2) {
     throw new Error('Not implemented');
   },
-};
+;
 
 module.exports = {
   shallowCopy,
