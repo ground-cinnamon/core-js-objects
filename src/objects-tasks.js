@@ -368,11 +368,7 @@ const cssSelectorBuilder = {
       attrs: [],
       pseudoClasses: [],
       pseudoElement: null,
-      stringify() {
-
-      }
     };
-  },
   },
 
   id(value) {
@@ -395,15 +391,15 @@ const cssSelectorBuilder = {
     return this;
   },
 
-  pseudoElement(value ) {
+  pseudoElement(value) {
     this.pseudoElement = value;
-    return this;;
+    return this;
   },
 
   combine(selector1, combinator, selector2) {
     throw new Error('Not implemented');
   },
-;
+};
 
 module.exports = {
   shallowCopy,
