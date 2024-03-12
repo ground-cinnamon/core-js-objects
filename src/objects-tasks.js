@@ -299,9 +299,9 @@ function group(array, keySelector, valueSelector) {
     if (resultMap.has(key)) {
       return resultMap.get(key).push(value);
     }
-    resultMap.set(key, [value]);
-  });
 
+    return resultMap.set(key, [value]);
+  });
   return resultMap;
 }
 
@@ -396,7 +396,7 @@ const cssSelectorBuilder = {
     return this;
   },
 
-  combine(/*selector1, combinator, selector2*/) {
+  combine(/* selector1, combinator, selector2 */) {
     throw new Error('Not implemented');
   },
 };
